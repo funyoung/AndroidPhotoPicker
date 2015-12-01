@@ -1,4 +1,4 @@
-package com.zhy.imageloader;
+package com.zhy.picker;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.zhy.bean.ImageFloder;
+import com.zhy.imageloader.R;
 import com.zhy.utils.BasePopupWindowForListView;
 import com.zhy.utils.CommonAdapter;
 import com.zhy.utils.ViewHolder;

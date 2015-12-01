@@ -1,5 +1,6 @@
-package com.zhy.imageloader;
+package com.zhy.picker;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.zhy.imageloader.R;
 import com.zhy.utils.CommonAdapter;
 
 public class MyAdapter extends CommonAdapter<String>
@@ -53,7 +55,6 @@ public class MyAdapter extends CommonAdapter<String>
 			@Override
 			public void onClick(View v)
 			{
-
 				// 已经选择过该图片
 				if (mSelectedImage.contains(mDirPath + "/" + item))
 				{
@@ -80,5 +81,13 @@ public class MyAdapter extends CommonAdapter<String>
 			mImageView.setColorFilter(Color.parseColor("#77000000"));
 		}
 
+	}
+
+	public ArrayList<String> getCheckedItems() {
+		ArrayList<String> arrayList = new ArrayList<String>();
+		if (null != mSelectedImage) {
+			arrayList.addAll(mSelectedImage);
+		}
+		return arrayList;
 	}
 }
