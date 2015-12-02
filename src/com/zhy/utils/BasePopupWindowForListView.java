@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.PopupWindow;
 
+import butterknife.ButterKnife;
+
 public abstract class BasePopupWindowForListView<T> extends PopupWindow
 {
 	/**
@@ -39,6 +41,9 @@ public abstract class BasePopupWindowForListView<T> extends PopupWindow
 	{
 		super(contentView, width, height, focusable);
 		this.mContentView = contentView;
+
+		ButterKnife.bind(mContentView);
+
 		context = contentView.getContext();
 		if (mDatas != null)
 			this.mDatas = mDatas;

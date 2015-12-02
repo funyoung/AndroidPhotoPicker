@@ -1,24 +1,24 @@
 package com.zhy.picker;
 
-import java.util.List;
-
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 import com.zhy.bean.ImageFloder;
 import com.zhy.imageloader.R;
 import com.zhy.utils.BasePopupWindowForListView;
 import com.zhy.utils.CommonAdapter;
+import com.zhy.utils.RecyclerClickListener;
 import com.zhy.utils.ViewHolder;
+
+import java.util.List;
 
 public class ListImageDirPopupWindow extends BasePopupWindowForListView<ImageFloder>
 {
-	private ListView mListDir;
+	private RecyclerView mListDir;
 
 	public ListImageDirPopupWindow(int width, int height,
-			List<ImageFloder> datas, View convertView)
+								   List<ImageFloder> datas, View convertView)
 	{
 		super(convertView, width, height, true, datas);
 	}
@@ -26,19 +26,23 @@ public class ListImageDirPopupWindow extends BasePopupWindowForListView<ImageFlo
 	@Override
 	public void initViews()
 	{
-		mListDir = (ListView) findViewById(R.id.id_list_dir);
-		mListDir.setAdapter(new CommonAdapter<ImageFloder>(context, mDatas,
-				R.layout.list_dir_item)
-		{
+		mListDir = (RecyclerView) findViewById(R.id.id_list_dir);
+
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+		mListDir.setLayoutManager(linearLayoutManager);
+		CommonAdapter adapter = new CommonAdapter<ImageFloder>(context, mDatas,
+				R.layout.list_dir_item);
+
+		adapter.setOnItemClickListener(new RecyclerClickListener() {
 			@Override
-			public void convert(ViewHolder helper, ImageFloder item)
-			{
-				helper.setText(R.id.id_dir_item_name, item.getName());
-				helper.setImageByUrl(R.id.id_dir_item_image,
-						item.getFirstImagePath());
-				helper.setText(R.id.id_dir_item_count, item.getCount() + "张");
+			public void onElementClick(ViewHolder holder, int position) {
+				if (mImageDirSelected != null) {
+					mImageDirSelected.selected(mDatas.get(position));
+				}
 			}
 		});
+
+		mListDir.setAdapter(adapter);
 	}
 
 	public interface OnImageDirSelected
@@ -55,19 +59,6 @@ public class ListImageDirPopupWindow extends BasePopupWindowForListView<ImageFlo
 
 	@Override
 	public void initEvents() {
-		mListDir.setOnItemClickListener(new OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id)
-			{
-
-				if (mImageDirSelected != null)
-				{
-					mImageDirSelected.selected(mDatas.get(position));
-				}
-			}
-		});
 	}
 
 	@Override

@@ -10,6 +10,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,7 +58,7 @@ public class PickerActivity extends AppCompatActivity implements OnImageDirSelec
 	 */
 	private List<String> mImgs;
 
-	private GridView mGirdView;
+	private RecyclerView mGirdView;
 	private MyAdapter mAdapter;
 	/**
 	 * 临时的辅助类，用于防止同一个文件夹的多次扫描
@@ -105,6 +108,9 @@ public class PickerActivity extends AppCompatActivity implements OnImageDirSelec
 		/**
 		 * 可以看到文件夹的路径和图片的路径分开保存，极大的减少了内存的消耗；
 		 */
+		GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 3);
+		mGirdView.setLayoutManager(linearLayoutManager);
+
 		mAdapter = new MyAdapter(getApplicationContext(), mImgs,
 				R.layout.grid_item, mImgDir.getAbsolutePath());
 		mGirdView.setAdapter(mAdapter);
@@ -257,7 +263,7 @@ public class PickerActivity extends AppCompatActivity implements OnImageDirSelec
 	 */
 	private void initView()
 	{
-		mGirdView = (GridView) findViewById(R.id.id_gridView);
+		mGirdView = (RecyclerView) findViewById(R.id.id_gridView);
 		mChooseDir = (TextView) findViewById(R.id.id_choose_dir);
 		mImageCount = (TextView) findViewById(R.id.id_total_count);
 
